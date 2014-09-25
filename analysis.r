@@ -22,7 +22,9 @@
 event_file = read.csv(file="clrs.csv", header=F)
 
 # Generates Bar Plot
-barplot(event_file$V1, main="Bar Plot", col=c(event_file$V2), xlab="")
+barplot(event_file$V1, main="Bar Plot", xlab="",
+	col=as.character(event_file$V2), border=F)
 
 # Generates Pie Chart
-pie(event_file$V1, main="Pie Chart", col=c(event_file$V2), labels="")
+pie(event_file$V1, main="Pie Chart", labels="",
+	col=as.character(event_file$V2), border=F)
