@@ -18,13 +18,47 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+# Creates output PDF
+pdf("output.pdf", width=6, height=10)
+
 # Gets Data From File
 event_file = read.csv(file="clrs.csv", header=F)
+
+# Preparing for pallets
+par()              # view current settings
+opar <- par()      # make a copy of current settings
+attach(mtcars)
+par(pin=c(5, 0.5), mfrow=c(3,1))
+
+# Checks if popular pallet needed
+if ( length(event_file$V2) > 30 ) {
+	# Top 8 pallet
+	tmplist = c(1, 1, 1 ,1 ,1 ,1, 1, 1)
+	popular = c()
+	for (i in 1:8)
+		popular[i] <- as.character(event_file$V2[i])
+	popular
+	# Generates Bar Plot
+	barplot(tmplist, main="Popular Pallet",
+		col=popular, border=F)
+}
+
+
+# Shows Total Pallet
+# code here
+
+# Restore pre-pallet settings
+par(opar) 
+
+# Shoes Proportional Pallet
+# code here
+
+# Generates Pie Chart
+pie(event_file$V1, main="Pie Chart", labels="",
+	col=as.character(event_file$V2), border=F)
 
 # Generates Bar Plot
 barplot(event_file$V1, main="Bar Plot", xlab="",
 	col=as.character(event_file$V2), border=F)
 
-# Generates Pie Chart
-pie(event_file$V1, main="Pie Chart", labels="",
-	col=as.character(event_file$V2), border=F)
+

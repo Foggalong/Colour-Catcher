@@ -58,6 +58,15 @@ fi
 grep -r -h -o "#[a-fA-F0-9]\{6\}" "$1" | tr -d "#" > output.clrs
 tr "[:lower:]" "[:upper:]" < output.clrs > clrs.tmp
 
+# Checks whether colours were found
+if grep -q "[a-fA-F0-9]\{6\}" clrs.tmp; then
+	: # pass
+else
+	echo "The argument doesn't contain any colours!"
+	rm clrs.tmp output.clrs
+	exit 0
+fi
+
 # Sorts codes by frequency
 sort clrs.tmp | uniq -c | sort -rn > output.clrs && rm clrs.tmp
 
@@ -92,8 +101,8 @@ sed -i -e "s/^[ \t]*//" clrs.csv
 sed -i "s/ /,#/g" clrs.csv
 
 # Running analysis via R
-R -q --no-save < analysis.r  >> /dev/null 2>&1
-rm clrs.csv
+R -q --no-save < analysis.r # >> /dev/null 2>&1
+# rm clrs.csv
 
 # End
 echo -e \
